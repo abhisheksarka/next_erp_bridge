@@ -1,4 +1,4 @@
-require_relative './sales_invoice'
+require_relative './journal'
 module NexterpAccountingBridge
   module Entity
   end
