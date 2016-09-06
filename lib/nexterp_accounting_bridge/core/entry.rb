@@ -8,7 +8,9 @@ module NexterpAccountingBridge
       end
 
       module ClassMethods
-        def create
+        def create(data)
+          data[:doctype] = doctype
+          client.insert(data)
         end
 
         def find(id=nil)
