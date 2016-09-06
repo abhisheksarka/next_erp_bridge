@@ -1,6 +1,7 @@
 module NexterpAccountingBridge
   module Core
     module Entry
+
       def self.included(base)
         base.send(:extend, ClassMethods)
         base.send(:include, InstanceMethods)
@@ -11,6 +12,10 @@ module NexterpAccountingBridge
         end
 
         def find(id=nil)
+        end
+
+        def client
+          Client.instance.frappe_client
         end
       end
 

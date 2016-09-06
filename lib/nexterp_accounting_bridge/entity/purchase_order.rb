@@ -1,9 +1,9 @@
 module NexterpAccountingBridge
   module Entity
-    class Journal < Base
+    class PurchaseOrder < Base
 
       def self.doctype
-        'Journal'
+        'Purchase%20Order'
       end
     end
   end
