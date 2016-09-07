@@ -1,14 +1,17 @@
 module NexterpAccountingBridge
   module Core
     module Doctypes
-      SUPPORTED = {
+      @supported = {
         Customer: 'Customer',
         Supplier: 'Supplier',
         Journal: 'Journal',
         PurchaseOrder: 'Purchase%20Order',
-        SupplierQuotation: 'Supplier%20Quotation',
-        Testing: 'TestEntry'
+        SupplierQuotation: 'Supplier%20Quotation'
       }
+
+      def self.supported
+        @supported
+      end
     end
   end
 end

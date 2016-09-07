@@ -30,7 +30,7 @@ module NexterpAccountingBridge
 
     def self.const_missing(name)
       klass_name = name
-      doctype_name = Core::Doctypes::SUPPORTED[klass_name]
+      doctype_name = Core::Doctypes.supported[klass_name]
       if doctype_name
         klass = Class.new(Base)
         klass.instance_variable_set(:@doctype, doctype_name)
