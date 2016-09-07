@@ -7,7 +7,7 @@ module NexterpAccountingBridge
         Journal: 'Journal',
         PurchaseOrder: 'Purchase%20Order',
         SupplierQuotation: 'Supplier%20Quotation',
-        Testing: 'Testing',
+        Testing: 'TestEntry'
       }
     end
   end

@@ -8,14 +8,11 @@ module NexterpAccountingBridge
       end
 
       module ClassMethods
-        def create(data)
-          data[:doctype] = doctype
-          res = client.insert(data)
-          if res['data']
-            self.new(res['data'])
-          else
-            res['exc']
-          end
+        def create(attrs)
+          attrs.merge!({
+            doctype: doctype
+          })
+          Util.klass_wrap(self, client.insert(attrs))
         end
 
         def find(id=nil)
@@ -31,7 +28,12 @@ module NexterpAccountingBridge
       end
 
       module InstanceMethods
-        def update
+        def update(attrs)
+          attrs.merge!({
+            doctype: doctype,
+            id: attributes['name']
+          })
+          Util.instance_wrap(self, client.update(attrs))
         end
 
         def destroy
