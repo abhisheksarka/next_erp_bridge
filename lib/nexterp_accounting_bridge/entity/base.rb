@@ -2,8 +2,10 @@ module NexterpAccountingBridge
   module Entity
     class Base
       include Core::Entry
-      def initialize
-        client.login
+      attr_accessor :attributes
+
+      def initialize(attributes)
+        @attributes = attributes
       end
     end
   end

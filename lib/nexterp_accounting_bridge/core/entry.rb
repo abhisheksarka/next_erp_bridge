@@ -10,7 +10,12 @@ module NexterpAccountingBridge
       module ClassMethods
         def create(data)
           data[:doctype] = doctype
-          client.insert(data)
+          res = client.insert(data)
+          if res['data']
+            self.new(res['data'])
+          else
+            res['exc']
+          end
         end
 
         def find(id=nil)
@@ -30,6 +35,14 @@ module NexterpAccountingBridge
         end
 
         def destroy
+        end
+
+        def client
+          self.class.client
+        end
+
+        def doctype
+          self.class.doctype
         end
       end
     end
