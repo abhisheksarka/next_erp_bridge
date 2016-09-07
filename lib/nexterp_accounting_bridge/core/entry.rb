@@ -8,16 +8,6 @@ module NexterpAccountingBridge
       end
 
       module ClassMethods
-        def create(attrs)
-          attrs.merge!({
-            doctype: doctype
-          })
-          Util.klass_wrap(self, client.insert(attrs))
-        end
-
-        def find(id=nil)
-        end
-
         def client
           Client.instance.frappe_client
         end
@@ -25,9 +15,32 @@ module NexterpAccountingBridge
         def doctype
           @doctype
         end
+
+        def create(attrs)
+          attrs.merge!({
+            doctype: doctype
+          })
+          Util.klass_wrap(self, client.insert(attrs))
+        end
+
+        def find(id)
+          attrs = {
+            doctype: doctype,
+            id: id
+          }
+          Util.klass_wrap(self, client.fetch_single_record(attrs))
+        end
       end
 
       module InstanceMethods
+        def client
+          self.class.client
+        end
+
+        def doctype
+          self.class.doctype
+        end
+
         def update(attrs)
           attrs.merge!({
             doctype: doctype,
@@ -37,14 +50,6 @@ module NexterpAccountingBridge
         end
 
         def destroy
-        end
-
-        def client
-          self.class.client
-        end
-
-        def doctype
-          self.class.doctype
         end
       end
     end
