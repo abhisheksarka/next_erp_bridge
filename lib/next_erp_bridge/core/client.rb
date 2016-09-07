@@ -2,7 +2,7 @@ require 'frappe/client'
 require 'singleton'
 require 'pry'
 
-module NexterpAccountingBridge
+module NextErpBridge
   module Core
     class Client
       include Singleton

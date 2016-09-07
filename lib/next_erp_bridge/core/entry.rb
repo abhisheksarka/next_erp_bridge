@@ -1,4 +1,4 @@
-module NexterpAccountingBridge
+module NextErpBridge
   module Core
     module Entry
 

@@ -1,6 +1,6 @@
 require 'frappe/client'
 require_relative './entry'
-module NexterpAccountingBridge
+module NextErpBridge
   module Core
     class Credentials
       @host = nil

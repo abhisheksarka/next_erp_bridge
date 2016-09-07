@@ -1,22 +1,22 @@
 require_relative './base'
 
-module NexterpAccountingBridge
+module NextErpBridge
   module Entity
     ##
     # Dynamically creates class to access the ERP API
     #
-    # Class and doctype should be defined in Core::Doctypes::SUPPORTED
+    # Class and doctype should be defined in Core::Doctypes.supported
     #
     # If defined, you can call methods 'create', 'update', 'destroy' and 'find'
     #
-    # For e.g NexterpAccountingBridge::Entity::Journal.create(attrs) assuming
-    # Journal is defined in Core::Doctypes::SUPPORTED
+    # For e.g NextErpBridge::Entity::Journal.create(attrs) assuming
+    # Journal is defined in Core::Doctypes.supported
     #
     # If basic CRUD is not enough on the class(Journal in this case) you can create
     # a new class of inside the Entity module and inherit the base class and define a
     # doctype on it and other methods needed
     #
-    # module NexterpAccountingBridge
+    # module NextErpBridge
     #   module Entity
     #     class Journal < Base
     #       @doctype = 'Journal%20Entry'

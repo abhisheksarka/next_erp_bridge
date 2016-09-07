@@ -1,4 +1,4 @@
-module NexterpAccountingBridge
+module NextErpBridge
   module Entity
     class Base
       include Core::Entry

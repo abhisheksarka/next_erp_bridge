@@ -4,7 +4,7 @@ require_relative './client'
 require_relative './entry'
 require_relative './util'
 
-module NexterpAccountingBridge
+module NextErpBridge
   module Core
   end
 end

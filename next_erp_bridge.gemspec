@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'nexterp_accounting_bridge/version'
+require 'next_erp_bridge/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "nexterp_accounting_bridge"
-  spec.version       = NexterpAccountingBridge::VERSION
+  spec.name          = "next_erp_bridge"
+  spec.version       = NextErpBridge::VERSION
   spec.authors       = ["abhisheksarka"]
   spec.email         = ["abhisheksarka@gmail.com"]
 
