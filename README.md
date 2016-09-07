@@ -40,9 +40,19 @@ NextErpBridge::Core::Doctypes.supported
 You can add more DocTypes to this hash itself
 ```ruby
 s = NextErpBridge::Core::Doctypes.supported
+
 s[:User] = "User"
+s[:SalesInvoice] = "Sales%20Invoice"
 ```
 
+### CRUD on any of the registered DocTypes
+```ruby
+user = NextErpBridge::Entity::User.create({first_name: 'Foo'})
+user.update(last_name: 'Bar')
+
+sales_invoice = NextErpBridge::Entity::SalesInvoice.find('a23252b')
+sales_invoice.destroy # destroy not supported yet
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
