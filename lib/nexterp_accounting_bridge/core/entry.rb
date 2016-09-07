@@ -19,6 +19,10 @@ module NexterpAccountingBridge
         def client
           Client.instance.frappe_client
         end
+
+        def doctype
+          @doctype
+        end
       end
 
       module InstanceMethods
