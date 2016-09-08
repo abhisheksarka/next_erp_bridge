@@ -51,6 +51,10 @@ module NextErpBridge
 
         def destroy
         end
+
+        def save
+          Util.instance_wrap(self, client.update(attributes.merge(id: attributes['name'], doctype: attributes['doctype'])))
+        end
       end
     end
   end
