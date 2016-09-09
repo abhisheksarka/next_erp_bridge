@@ -1,6 +1,6 @@
 # NextErpBridge
 
-Provides CRUD operations for all default/custom Doctypes in NextErp and provides a wrapper on top of it as well like ActiveRecord Models
+Provides CRUD operations for all default/custom Doctypes in NextErp and provides a wrapper on top of it as well like ActiveRecord Models. Instead of communicating through the API directly you should use this gem since it provides better interfaces and cleaner implementation
 
 ## Installation
 
@@ -13,10 +13,6 @@ gem 'next_erp_bridge', git: 'https://5e96429b259a95a8fe20ddb35ed89e0e983ecf08:x-
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install next_erp_bridge
 
 ## Usage
 
@@ -35,24 +31,34 @@ end
 The gem already comes with some predefined DocTypes
 ```ruby
 NextErpBridge::Core::Doctypes.supported
-# {:Customer=>"Customer", :Supplier=>"Supplier", :Journal=>"Journal", :PurchaseOrder=>"Purchase%20Order", :SupplierQuotation=>"Supplier%20Quotation"}
 ```
-You can add more DocTypes to this hash itself
+
+You can add DocTypes you want to communicate with using the following
 ```ruby
 s = NextErpBridge::Core::Doctypes.supported
 
-s[:User] = "User"
-s[:SalesInvoice] = "Sales%20Invoice"
+# Register DocTypes
+s.merge!({
+  User: 'User',
+  SalesInvoice: 'Sales%20Invoice'
+})
+# The hash key is used to generate class names within this gem
+# The value is the value of the Doctype in the ERP system
 ```
 
 ### CRUD on any of the registered DocTypes
 ```ruby
 user = NextErpBridge::Entity::User.create({first_name: 'Foo'})
+
 user.update(last_name: 'Bar')
 
 sales_invoice = NextErpBridge::Entity::SalesInvoice.find('a23252b')
-sales_invoice.destroy # destroy not supported yet
+
+sales_invoice.name = "Some Random Name"
+
+sales_invoice.save
 ```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
