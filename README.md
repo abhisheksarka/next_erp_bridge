@@ -28,17 +28,12 @@ end
 
 ### Register the DocTypes that you want to do CRUD on
 
-The gem already comes with some predefined DocTypes
-```ruby
-NextErpBridge::Core::Doctypes.supported
-```
-
 You can add DocTypes you want to communicate with using the following
 ```ruby
-s = NextErpBridge::Core::Doctypes.supported
+registered_doctypes = NextErpBridge::Core::Doctypes.supported
 
 # Register DocTypes
-s.merge!({
+registered_doctypes.merge!({
   User: 'User',
   SalesInvoice: 'Sales%20Invoice'
 })
