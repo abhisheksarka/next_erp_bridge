@@ -52,6 +52,8 @@ sales_invoice = NextErpBridge::Entity::SalesInvoice.find('a23252b')
 sales_invoice.name = "Some Random Name"
 
 sales_invoice.save
+
+c = NextErpBridge::Entity::Customer.find_by({customer_name: 'Bridge 4'})
 ```
 
 ## Development
