@@ -17,18 +17,25 @@ module NextErpBridge
         end
 
         def create(attrs)
-          attrs.merge!({
+          Util.klass_wrap(self, client.insert(attrs.merge({
             doctype: doctype
-          })
-          Util.klass_wrap(self, client.insert(attrs))
+          })))
         end
 
         def find(id)
-          attrs = {
-            doctype: doctype,
-            id: id
-          }
-          Util.klass_wrap(self, client.fetch_single_record(attrs))
+          Util.klass_wrap(self, client.fetch_single_record({doctype: doctype, id: id}))
+        end
+
+        def find_by(params)
+          filters = [[doctype]]
+          params.each { | k, v | filters[0].concat([k, '=', v]) }
+          res = client.fetch({ doctype: doctype }, filters)
+          data = res['data']
+          if data
+            find(data.last['name'])
+          else
+            res
+          end
         end
       end
 
@@ -42,10 +49,7 @@ module NextErpBridge
         end
 
         def update(attrs)
-          attrs.merge!({
-            doctype: doctype,
-            id: attributes['name']
-          })
+          attrs.merge!({ doctype: doctype,id: attributes['name'] })
           Util.instance_wrap(self, client.update(attrs))
         end
 
