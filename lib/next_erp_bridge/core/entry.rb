@@ -1,4 +1,5 @@
 require 'uri'
+require 'active_support/core_ext'
 
 module NextErpBridge
   module Core
@@ -38,10 +39,10 @@ module NextErpBridge
           params.each { | k, v | filters[0].concat([k.to_s, '=', v]) }
           res = client.fetch({ doctype: encoded_doctype }, filters)
           data = res['data']
-          if data
+          if data.present?
             find(data.first['name'])
           else
-            res
+            data
           end
         end
       end
