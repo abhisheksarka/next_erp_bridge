@@ -1,6 +1,5 @@
 require 'frappe/client'
 require 'singleton'
-require 'pry'
 
 module NextErpBridge
   module Core
