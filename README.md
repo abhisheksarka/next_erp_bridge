@@ -30,12 +30,9 @@ end
 
 You can add DocTypes you want to communicate with using the following
 ```ruby
-registered_doctypes = NextErpBridge::Core::Doctypes.supported
-
-# Register DocTypes
-registered_doctypes.merge!({
-  User: 'User',
-  SalesInvoice: 'Sales%20Invoice'
+NextErpBridge::Core::Doctypes.supported.merge!({
+  Customer: 'Customer',
+  SalesInvoice: 'Sales Invoice'
 })
 # The hash key is used to generate class names within this gem
 # The value is the value of the Doctype in the ERP system
@@ -44,16 +41,17 @@ registered_doctypes.merge!({
 ### CRUD on any of the registered DocTypes
 ```ruby
 user = NextErpBridge::Entity::User.create({first_name: 'Foo'})
-
 user.update(last_name: 'Bar')
 
 sales_invoice = NextErpBridge::Entity::SalesInvoice.find('a23252b')
 
 sales_invoice.name = "Some Random Name"
-
 sales_invoice.save
 
-c = NextErpBridge::Entity::Customer.find_by({customer_name: 'Bridge 4'})
+c = NextErpBridge::Entity::Customer.find_by({customer_name: 'Foo Bar'})
+c.customer_name = nil
+c.save // false
+c.errors // error string returned by the ERP
 ```
 
 ## Development

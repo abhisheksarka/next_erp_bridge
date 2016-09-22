@@ -48,6 +48,8 @@ module NextErpBridge
       end
 
       module InstanceMethods
+        attr_accessor :errors
+        
         def client
           self.class.client
         end
