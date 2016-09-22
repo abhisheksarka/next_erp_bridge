@@ -20,7 +20,7 @@ module NextErpBridge
         end
 
         def encoded_doctype
-          URI.encode(doctype)
+          doctype
         end
 
         def create(attrs)
