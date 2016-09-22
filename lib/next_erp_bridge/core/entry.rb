@@ -24,13 +24,16 @@ module NextErpBridge
         end
 
         def create(attrs)
-          Util.klass_wrap(self, client.insert(attrs.merge({
+          a = attrs.merge({
             doctype: encoded_doctype
-          })))
+          })
+          Util.instance_create(self, client.insert(a), a)
         end
 
         def find(id)
-          Util.klass_wrap(self, client.fetch_single_record({doctype: encoded_doctype, id: id}))
+          res = client.fetch_single_record({doctype: encoded_doctype, id: id})
+          d = res['data']
+          self.new(d) if d.present?
         end
 
         def find_by(params)
@@ -63,14 +66,16 @@ module NextErpBridge
 
         def update(attrs)
           attrs.merge!({ doctype: encoded_doctype, id: attributes['name'] })
-          Util.instance_wrap(self, client.update(attrs))
+          Util.instance_update(self, client.update(attrs))
+          !errors.present?
         end
 
         def destroy
         end
 
         def save
-          Util.instance_wrap(self, client.update(attributes.merge(id: attributes['name'], doctype: encoded_doctype)))
+          Util.instance_update(self, client.update(attributes.merge(id: attributes['name'], doctype: encoded_doctype)))
+          !errors.present?
         end
       end
     end

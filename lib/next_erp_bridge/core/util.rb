@@ -1,22 +1,24 @@
 module NextErpBridge
   module Core
     module Util
-      def self.klass_wrap(klass, res)
+      def self.instance_create(klass, res, attrs=nil)
         if res['data']
-          klass.new(res['data'])
+          instance = klass.new(res['data'])
         else
-          res['exc']
+          instance = klass.new(attrs)
+          instance.errors = res['exc']
         end
+        instance
       end
 
-      def self.instance_wrap(instance, res)
+      def self.instance_update(instance, res)
         if res['data']
           instance.errors = nil
           instance.attributes = res['data']
         else
           instance.errors = res['exc']
-          false
         end
+        instance
       end
     end
   end
