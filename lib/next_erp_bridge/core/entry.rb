@@ -30,7 +30,6 @@ module NextErpBridge
         end
 
         def find(id)
-          id = URI.encode(id)
           Util.klass_wrap(self, client.fetch_single_record({doctype: encoded_doctype, id: id}))
         end
 
@@ -49,7 +48,7 @@ module NextErpBridge
 
       module InstanceMethods
         attr_accessor :errors
-        
+
         def client
           self.class.client
         end
