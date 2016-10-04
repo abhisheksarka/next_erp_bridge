@@ -1,4 +1,5 @@
 require 'uri'
+require 'active_support'
 require 'active_support/core_ext'
 
 module NextErpBridge
@@ -11,6 +12,15 @@ module NextErpBridge
       end
 
       module ClassMethods
+        # All methods call this so that we can do a login
+        # before we actually start CRUD in the ERP
+        # As of now for every call it is calling login
+        # which is bad
+        # TODO: Need to change this to, login when session expires
+        def before_action(c={login: true})
+          Client.instance.login if c[:login]
+        end
+
         def client
           Client.instance.frappe_client
         end
@@ -24,25 +34,31 @@ module NextErpBridge
         end
 
         def create(attrs)
+          before_action
+
           a = attrs.merge({
             doctype: encoded_doctype
           })
           Util.instance_create(self, client.insert(a), a)
         end
 
-        def find(id)
+        def find(id, do_login=true)
+          before_action(login: do_login)
+
           res = client.fetch_single_record({doctype: encoded_doctype, id: id})
           d = res['data']
           self.new(d) if d.present?
         end
 
         def find_by(params)
+          before_action
+
           filters = [[doctype]]
           params.each { | k, v | filters[0].concat([k.to_s, '=', v]) }
           res = client.fetch({ doctype: encoded_doctype }, filters)
           data = res['data']
           if data.present?
-            find(data.first['name'])
+            find(data.first['name'], false)
           else
             data
           end
@@ -65,6 +81,8 @@ module NextErpBridge
         end
 
         def update(attrs)
+          before_action
+
           attrs.merge!({ doctype: encoded_doctype, id: attributes['name'] })
           Util.instance_update(self, client.update(attrs))
           !errors.present?
@@ -74,6 +92,8 @@ module NextErpBridge
         end
 
         def save
+          before_action
+
           Util.instance_update(self, client.update(attributes.merge(id: attributes['name'], doctype: encoded_doctype)))
           !errors.present?
         end
