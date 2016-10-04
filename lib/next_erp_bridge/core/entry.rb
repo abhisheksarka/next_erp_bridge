@@ -72,6 +72,10 @@ module NextErpBridge
           self.class.client
         end
 
+        def before_action
+          self.class.before_action
+        end
+
         def doctype
           self.class.doctype
         end
