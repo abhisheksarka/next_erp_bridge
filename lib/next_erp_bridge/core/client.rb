@@ -1,4 +1,3 @@
-require 'frappe/client'
 require 'singleton'
 
 module NextErpBridge
@@ -11,7 +10,7 @@ module NextErpBridge
 
       def initialize
         @credentials = Credentials
-        @frappe_client = Frappe::Client::FrappeClient.new(
+        @frappe_client = FrappeClient.new(
                           credentials.host,
                           credentials.username,
                           credentials.password

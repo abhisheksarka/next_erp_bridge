@@ -1,5 +1,5 @@
-require 'frappe/client'
 require_relative './entry'
+
 module NextErpBridge
   module Core
     class Credentials
