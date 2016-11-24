@@ -114,6 +114,25 @@ module NextErpBridge
           }, :body => {:data => data.to_json})
         return response.parsed_response
       end
+
+      # This method can be used to call any raw api supported by frappe/erpnext
+
+      def raw_api(url, request_type, params)
+        url_path = self.url + url
+        encoded_url_path = URI.encode url_path
+        if request_type == "Get"
+          response = HTTParty.get(encoded_url_path, :headers => {
+          "Cookie" => self.session_cookie, "Accept" => "application/json",
+          "X-Frappe-CSRF-Token" => self.session_cookie
+          })
+        else
+          response = HTTParty.post(encoded_url_path, :headers => {
+          "Cookie" => self.session_cookie, "Accept" => "application/json",
+          "X-Frappe-CSRF-Token" => self.session_cookie,
+          "Content-Type" => "application/x-www-form-urlencoded" }, :body => params)
+        end
+        return response.parsed_response
+      end
     end
   end
 end
