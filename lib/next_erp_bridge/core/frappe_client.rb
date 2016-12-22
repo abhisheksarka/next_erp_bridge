@@ -67,14 +67,14 @@ module NextErpBridge
       # fields : fields from the docType required in response. default is only name
       # fields can be set as follows : ["name","email_id"]
 
-      def fetch(data, filters=[],fields=[])
-        url_path = self.url + "/api/resource/" + data[:doctype] + "?filters=#{filters}&fields=#{fields}"
+      def fetch(data, filters=[], fields=[], limit_start=0, limit_page_length=20)
+        url_path = self.url + "/api/resource/" + data[:doctype] + "?filters=#{filters}&fields=#{fields}&limit_start=#{limit_start}&limit_page_length=#{limit_page_length}"
         encoded_url_path = URI.encode url_path
 
         response = HTTParty.get(encoded_url_path, :headers => {
           "Cookie" => self.session_cookie, "Accept" => "application/json",
           "X-Frappe-CSRF-Token" => self.session_cookie
-          })
+        })
         return response.parsed_response
       end
 
