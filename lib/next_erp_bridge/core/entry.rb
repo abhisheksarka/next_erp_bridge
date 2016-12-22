@@ -53,7 +53,11 @@ module NextErpBridge
         def all(limit_start=0, limit_page_length=0, do_login=true)
           before_action(login: do_login)
           res = client.fetch({doctype: encoded_doctype}, [ ], ["*"], limit_start, limit_page_length)
-          res['data'].map { | r | self.new(r) }
+          if res['data'].present?
+            res['data'].map { | r | self.new(r) }
+          else
+            [ ]
+          end
         end
 
         def find_by(params)
