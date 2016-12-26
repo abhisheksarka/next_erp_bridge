@@ -1,6 +1,8 @@
 module NextErpBridge
   module Entity
     class Base
+      @@klass_registry = { }
+
       include Core::Entry
       attr_accessor :attributes
 
@@ -21,6 +23,10 @@ module NextErpBridge
         else
           super(m.to_sym, *args)
         end
+      end
+
+      def self.klass_registry
+        @@klass_registry
       end
     end
   end

@@ -32,7 +32,23 @@ module NextErpBridge
       klass_name = name
       doctype_name = Core::Doctypes.supported[klass_name]
       if doctype_name
-        klass = Class.new(Base)
+        registry = Base.klass_registry
+
+        # Check if the class has been created already
+        # This is to prevent creation of multiple
+        # versions of the same class object
+        klass = registry[doctype_name]
+
+        # If it is not present create an anonymous class
+        # and add it to the registry
+        if klass.blank?
+          klass = Class.new(Base) do
+            
+          end
+          registry[doctype_name] = klass
+        end
+
+        # Do stuff on the class and return the class instance
         klass.instance_variable_set(:@doctype, doctype_name)
         klass
       else
