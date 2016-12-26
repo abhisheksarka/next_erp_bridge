@@ -35,16 +35,12 @@ module NextErpBridge
 
         def create(attrs)
           before_action
-
-          a = attrs.merge({
-            doctype: encoded_doctype
-          })
+          a = attrs.merge({ doctype: encoded_doctype })
           Util.instance_create(self, client.insert(a), a)
         end
 
         def find(id, do_login=true)
           before_action(login: do_login)
-
           res = client.fetch_single_record({doctype: encoded_doctype, id: id})
           d = res['data']
           self.new(d) if d.present?
@@ -62,7 +58,6 @@ module NextErpBridge
 
         def find_by(params)
           before_action
-
           filters = [[doctype]]
           params.each { | k, v | filters[0].concat([k.to_s, '=', v]) }
           res = client.fetch({ doctype: encoded_doctype }, filters)
@@ -96,13 +91,26 @@ module NextErpBridge
 
         def update(attrs)
           before_action
-
           attrs.merge!({ doctype: encoded_doctype, id: attributes['name'] })
           Util.instance_update(self, client.update(attrs))
           !errors.present?
         end
 
-        def destroy
+        def rename(new_name, force=false, merge=false, ignore_permissions=false)
+          before_action
+          res = client.api_method('frappe.model.rename_doc.rename_doc', {
+            doctype: doctype,
+            old: self.name,
+            new: new_name,
+            force: force,
+            merge: merge,
+            ignore_permissions: ignore_permissions
+          })
+          if res && res['message']
+            self.name = res['message']
+          else
+            false
+          end
         end
 
         def save
