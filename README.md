@@ -7,7 +7,7 @@ Provides CRUD operations for all default/custom Doctypes in NextErp and provides
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'next_erp_bridge', git: 'https://5e96429b259a95a8fe20ddb35ed89e0e983ecf08:x-oauth-basic@github.com/NestAway/next_erp_bridge.git', branch: 'master'
+gem 'next_erp_bridge'
 ```
 
 And then execute:
@@ -50,8 +50,8 @@ sales_invoice.save
 
 c = NextErpBridge::Entity::Customer.find_by({customer_name: 'Foo Bar'})
 c.customer_name = nil
-c.save // false
-c.errors // error string returned by the ERP
+c.save # false
+c.errors # error string returned by the ERP
 ```
 
 ## Development
