@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{CRUD API for NextErp Doctypes}
   spec.description   = %q{Provides CRUD operations for all default/custom Doctypes in NextErp}
-  spec.homepage      = "https://github.com/NestAway/next_erp_bridge/"
+  spec.homepage      = "https://github.com/abhisheksarka/next_erp_bridge"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.11"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "pry"
-  
+
   spec.add_dependency 'activesupport', "< 5.0"
   spec.add_dependency 'httparty'
 end
